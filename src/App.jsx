@@ -4,12 +4,24 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      buyItem: ["milk", "eggs", "bread"],
-      message: ""
+      buyItem: [],
+      message: "Welcome!",
+      count: 0,
+      editing: false
     };
   }
+  increment = () => {
+    this.setState({
+      count: this.state.count + 1
+    });
+  };
+  decrement = () => {
+    this.setState({
+      count: this.state.count - 1
+    });
+  };
 
-  addItem(e) {
+  addItem = e => {
     e.preventDefault();
     const { buyItem } = this.state;
     const newItem = this.newItem.value;
@@ -29,11 +41,12 @@ class App extends Component {
           buyItem: [...buyItem, newItem],
           message: ""
         });
+        this.increment();
       }
       this.addForm.reset();
     }
-  }
-  removeItem(item) {
+  };
+  removeItem = item => {
     const newBuyItem = this.state.buyItem.filter(buyItem => {
       return buyItem !== item;
     });
@@ -41,23 +54,41 @@ class App extends Component {
     this.setState({
       buyItem: [...newBuyItem]
     });
+    this.decrement();
 
     if (newBuyItem.length === 0) {
       this.setState({
         message: "List is Empty!"
       });
     }
-  }
+  };
 
-  clearList() {
+  renameItem = () => {
+    this.setState({
+      editing: true
+    });
+  };
+  save = () => {
+    const renamedItem = this.renamedItem.value;
+    const newBuyItem = this.state.buyItem.filter(item => {
+      return item === renamedItem;
+    });
+    this.setState({
+      editing: false,
+      buyItem: [...newBuyItem, renamedItem]
+    });
+  };
+
+  clearList = () => {
     this.setState({
       buyItem: [],
-      message: "List is Empty!"
+      message: "List is Empty!",
+      count: 0
     });
-  }
+  };
 
   render() {
-    const { buyItem, message } = this.state;
+    const { buyItem, message, count, editing } = this.state;
     return (
       <div className="App">
         <div className="center">
@@ -101,9 +132,29 @@ class App extends Component {
                 {buyItem.map(item => {
                   return (
                     <tr key={item} className="item-part">
-                      <td>1</td>
+                      <td>{count}</td>
+                      {editing === true && (
+                        <div>
+                          <textarea
+                            ref={input => {
+                              this.renamedItem = input;
+                            }}
+                          >
+                            {item}
+                          </textarea>
+                          <button onClick={this.save}>Save</button>
+                        </div>
+                      )}
                       <td>{item}</td>
                       <td>
+                        <button
+                          onClick={e => {
+                            this.renameItem(item);
+                          }}
+                          type="button"
+                        >
+                          Rename
+                        </button>
                         <button
                           onClick={e => {
                             this.removeItem(item);
