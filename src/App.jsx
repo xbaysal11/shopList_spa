@@ -7,6 +7,15 @@ class App extends Component {
       buyItem: ["milk", "eggs", "bread"]
     };
   }
+
+  addItem(e) {
+    e.preventDefault();
+    const newItem = this.newItem.value;
+    this.setState({
+      buyItem: [...this.state.buyItem, newItem]
+    });
+  }
+
   render() {
     const { buyItem } = this.state;
     return (
@@ -14,8 +23,19 @@ class App extends Component {
         <div className="center">
           <img src="https://img.icons8.com/clouds/100/000000/online-shop-shopping-bag.png" />
           <h2>Shopping List</h2>
-          <form>
-            <input type="text" name="product" placeholder="Coffee " />
+          <form
+            onSubmit={e => {
+              this.addItem(e);
+            }}
+          >
+            <input
+              ref={input => {
+                this.newItem = input;
+              }}
+              type="text"
+              name="product"
+              placeholder="Coffee "
+            />
             <button type="submit">Add</button>
           </form>
         </div>
