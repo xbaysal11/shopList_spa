@@ -2,11 +2,18 @@ Body {
     background: #f2f2f2;
 }
 
-.table-card {
-    margin: 0 auto;
+table {
     border-collapse: collapse;
-    width: 40%;
+    width: 100%;
+}
+
+.table-card {
     border-radius: 5px;
+    padding: 20px;
+    background: rgb(255, 255, 255);
+    width: 40%;
+    margin: 20px auto;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)!important;
 }
 
 th, td {
@@ -14,12 +21,12 @@ th, td {
     padding: 8px;
 }
 
-tr:nth-child(even) {
-    background-color: #f2f2f2
+.item-part {
+    border-top: 1px solid #f2f2f2;
 }
 
 th {
-    background-color: rgb(76, 175, 163);
+    background-color: rgb(91, 202, 198);
     color: white;
 }
 
