@@ -4,26 +4,48 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      buyItem: ["milk", "eggs", "bread"]
+      buyItem: ["milk", "eggs", "bread"],
+      message: ""
     };
   }
 
   addItem(e) {
     e.preventDefault();
+    const { buyItem } = this.state;
     const newItem = this.newItem.value;
-    this.setState({
-      buyItem: [...this.state.buyItem, newItem]
-    });
+    const isOnTheList = buyItem.includes(newItem);
+
+    if (isOnTheList) {
+      this.setState({
+        message: "This item is already on the list!"
+      });
+    } else {
+      if (newItem === "") {
+        this.setState({
+          message: "Input is Empty!"
+        });
+      } else {
+        this.setState({
+          buyItem: [...buyItem, newItem],
+          message: ""
+        });
+      }
+      this.addForm.reset();
+    }
   }
 
   render() {
-    const { buyItem } = this.state;
+    const { buyItem, message } = this.state;
     return (
       <div className="App">
         <div className="center">
-          <img src="https://img.icons8.com/clouds/100/000000/online-shop-shopping-bag.png" />
+          <img
+            src="https://img.icons8.com/clouds/100/000000/online-shop-shopping-bag.png"
+            alt=""
+          />
           <h2>Shopping List</h2>
           <form
+            ref={input => (this.addForm = input)}
             onSubmit={e => {
               this.addItem(e);
             }}
@@ -36,10 +58,13 @@ class App extends Component {
               name="product"
               placeholder="Coffee "
             />
-            <button type="submit">Add</button>
+            <button id="add" type="submit">
+              Add
+            </button>
           </form>
         </div>
         <div className="table-card">
+          {message !== "" && <p className="message center">{message}</p>}
           <table>
             <tr>
               <th>#</th>
@@ -48,7 +73,7 @@ class App extends Component {
             </tr>
             {buyItem.map(item => {
               return (
-                <tr className="item-part">
+                <tr key={item} className="item-part">
                   <td>1</td>
                   <td>{item}</td>
                   <td>
