@@ -134,7 +134,7 @@ class App extends Component {
                     <tr key={item} className="item-part">
                       <td>{count}</td>
                       {editing === true && (
-                        <div>
+                        <div className="block">
                           <textarea
                             ref={input => {
                               this.renamedItem = input;
@@ -145,7 +145,7 @@ class App extends Component {
                           <button onClick={this.save}>Save</button>
                         </div>
                       )}
-                      <td>{item}</td>
+                      {editing === false && <td>{item}</td>}
                       <td>
                         <button
                           onClick={e => {
