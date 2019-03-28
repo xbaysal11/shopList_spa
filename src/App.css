@@ -1,0 +1,28 @@
+Body {
+    background: #f2f2f2;
+}
+
+.table-card {
+    margin: 0 auto;
+    border-collapse: collapse;
+    width: 40%;
+    border-radius: 5px;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2
+}
+
+th {
+    background-color: rgb(76, 175, 163);
+    color: white;
+}
+
+.title {
+    text-align: center;
+}
