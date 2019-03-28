@@ -49,6 +49,13 @@ class App extends Component {
     }
   }
 
+  clearList() {
+    this.setState({
+      buyItem: [],
+      message: "List is Empty!"
+    });
+  }
+
   render() {
     const { buyItem, message } = this.state;
     return (
@@ -111,7 +118,14 @@ class App extends Component {
                 })}
               </table>
               <div className="right">
-                <button type="submit">Clear List</button>
+                <button
+                  onClick={e => {
+                    this.clearList();
+                  }}
+                  type="button"
+                >
+                  Clear List
+                </button>
               </div>
             </>
           )}
