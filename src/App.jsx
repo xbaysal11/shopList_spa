@@ -33,6 +33,21 @@ class App extends Component {
       this.addForm.reset();
     }
   }
+  removeItem(item) {
+    const newBuyItem = this.state.buyItem.filter(buyItem => {
+      return buyItem !== item;
+    });
+
+    this.setState({
+      buyItem: [...newBuyItem]
+    });
+
+    if (newBuyItem.length === 0) {
+      this.setState({
+        message: "List is Empty!"
+      });
+    }
+  }
 
   render() {
     const { buyItem, message } = this.state;
@@ -64,28 +79,42 @@ class App extends Component {
           </form>
         </div>
         <div className="table-card">
-          {message !== "" && <p className="message center">{message}</p>}
-          <table>
-            <tr>
-              <th>#</th>
-              <th>Item</th>
-              <th>Action</th>
-            </tr>
-            {buyItem.map(item => {
-              return (
-                <tr key={item} className="item-part">
-                  <td>1</td>
-                  <td>{item}</td>
-                  <td>
-                    <button type="submit">Remove</button>
-                  </td>
+          {(message !== "" || buyItem.length === 0) && (
+            <p className="message center">{message}</p>
+          )}
+          {buyItem.length > 0 && (
+            <>
+              <table>
+                <tr>
+                  <th>#</th>
+                  <th>Item</th>
+                  <th>Action</th>
                 </tr>
-              );
-            })}
-          </table>
-          <div className="right">
-            <button type="submit">Clear List</button>
-          </div>
+
+                {buyItem.map(item => {
+                  return (
+                    <tr key={item} className="item-part">
+                      <td>1</td>
+                      <td>{item}</td>
+                      <td>
+                        <button
+                          onClick={e => {
+                            this.removeItem(item);
+                          }}
+                          type="button"
+                        >
+                          Remove
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </table>
+              <div className="right">
+                <button type="submit">Clear List</button>
+              </div>
+            </>
+          )}
         </div>
       </div>
     );
